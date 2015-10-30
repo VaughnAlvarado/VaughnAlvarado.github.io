@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WhackaMole</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+	<link rel='stylesheet' href='/css/whackamole.css'>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+<body>
+	<h1>WhacknJoff Game</h1>
+	<div class='row'>
+		<div class='col-md-offset-5'>
+			<p class='score'></p>
+			<p class='highscore'></p>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-md-offset-5'>
+			<p class='key'>Joffrey = 200pnts<br> Tyrion = -75pnts<br> DireWolf = -150pnts<br>JonRed = Death</p>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-md-offset-5'>
+			<button id='hide-video'>Hide Video</button>
+		</div>
+		<div class='col-md-offset-5'>
+			<button class='start'>Start Game</button>
+		</div>
+	</div>
+	<div class='video'>
+		<iframe width="1050" height="600" src="https://www.youtube.com/embed/BvDluAALXeU?rel=0&autoplay=1&loop=1&playlist=BvDluAALXeU" frameborder="0" allowfullscreen></iframe>
+	</div>
+	<audio controls id="sound">
+ 		 <source src="/knife2.mp3" type="audio/mpeg">
+    </audio>
+    <audio controls id='sound2'>
+    	<source src='/growl.mp3' type='audio/mpeg'>
+    </audio>
+    <audio controls id='sound3'>
+    	<source src='/stab2.mp3' type='audio/mpeg'>
+    </audio>
+	<div class='container'>
+		<div class='row'>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='1'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='2'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='3'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='4'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='5'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='6'></div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='7'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='8'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='9'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='10'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='11'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='12'></div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='13'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='14'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='15'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='16'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='17'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='18'></div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='19'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='20'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='21'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='22'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='23'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='24'></div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='25'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='26'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='27'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='28'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='29'></div>
+			</div>
+			<div class='col-md-2'>
+				<div class='molehole' data-mole='30'></div>
+			</div>
+		</div>
+	</div>
+	<script>
+	// $(document).ready(function() { 
+		var delay = 1000
+		var joffrey = 0
+		var time = 30
+		var joffMoles = []
+		var moleholepoppers = null;
+		var container = $('.container')
+		container.hide();
+		$('audio').hide();
+		$('.video').hide();
+		$('#hide-video').click(function() {
+			$('.video').hide();
+		})
+		// function moleHit() {
+		// 	$('.molehole').click(function() {
+		// 		var buttonClicked = $(this).attr('data-mole');
+		// 	});
+		// };
+		// moleHit();
+		function startGame() {
+			$('.start').click(function() {
+				clearInterval(moleholepoppers);
+				moleholepoppers = setInterval(function() {
+					addMoleOfType('direWolf');
+					addMoleOfType('tyrion');
+					addMoleOfType('dangerMole');
+					addMoleOfType('dooshBagMole');
+				},delay);
+
+				timer();
+				$(this).hide();
+				joffrey = 0;
+				time = 30;
+				container.show();
+			})
+		}
+		startGame();
+		function randomNumber() {
+			var random = Math.floor((Math.random()*30)+1);
+			return random;
+		}
+		function moleFinder() {
+			var randomMole = randomNumber();
+			var mole = $('[data-mole=' + randomMole + ']');
+			console.log(mole);
+			return mole;
+		}
+		function score() {
+			$(document).on('click', '.molehole', function() {
+				if ($(this).hasClass('dooshBagMole')) {
+					document.getElementById('sound').play();
+					joffrey += 200;
+				}
+				if($(this).hasClass('tyrion')) {
+					document.getElementById('sound3').play();
+					joffrey -= 75;
+				}
+				if($(this).hasClass('direWolf')) {
+					document.getElementById('sound2').play();
+					joffrey -= 150;
+				}
+				if($(this).hasClass('dangerMole')) {
+					time = 0;
+					alert('You Killed Jon Snow!')
+					$('.video').show();
+				}
+				$('.score').html('Score: ' + joffrey);
+			})
+		}
+		score();
+		function highScore() {
+			var userhighscore = joffrey;
+			$('.highscore').html('HighScore: ' + joffrey);
+		} 
+		function timer() {
+			var timer = setInterval(function() {
+				time -=1
+				if (time <= 0) {
+					clearInterval(moleholepoppers);
+					clearInterval(timer);
+					$('.molehole').removeClass('dooshBagMole');
+					$('.start').show();
+					highScore();
+					container.hide();
+				}
+				if (time < 16) {
+					clearInterval(moleholepoppers);
+					moleholepoppers = setInterval(function() {
+						addMoleOfType('tyrion');
+						addMoleOfType('dooshBagMole');
+						addMoleOfType('dangerMole');
+						addMoleOfType('direWolf');
+					},700);
+					joffrey += 400
+				}
+			},1000)
+		}
+		function addMoleOfType(class_name) {
+			$('.molehole').removeClass(class_name);
+			moleFinder().addClass(class_name);
+		}
+	// });
+	</script>
+
+</body>
+</html>
